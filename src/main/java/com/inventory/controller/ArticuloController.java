@@ -65,7 +65,7 @@ public class ArticuloController {
 
     String linea = "+----+----------+-------------------+-----------+----------------+";
 
-    System.out.println("\n📋 LISTA DE PRODUCTOS");
+    System.out.println("\n📋 LISTA DE ARTICULOS");
     System.out.println(linea);
 
     System.out.printf("| %-2s | %-8s | %-17s | %-9s | %-14s |%n",
