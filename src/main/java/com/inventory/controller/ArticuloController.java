@@ -1,12 +1,13 @@
 package com.inventory.controller;
 
-import com.inventory.service.ProductoService;
-import com.inventory.model.Producto;
+import com.inventory.service.ArticuloService;
+import com.inventory.model.Articulo
+;
 import java.util.Scanner;
 
-public class ProductoController {
+public class ArticuloController {
 
-    private ProductoService service = new ProductoService();
+    private ArticuloService service = new ArticuloService();
     private Scanner sc = new Scanner(System.in);
 
     public void iniciar() {
@@ -72,7 +73,7 @@ public class ProductoController {
 
     System.out.println(linea);
 
-    for (Producto p : service.listar()) {
+    for (Articulo p : service.listar()) {
         System.out.printf("| %-2d | %-8s | %-17s | %-9.2f | %-14s |%n",
                 p.id,
                 truncar(p.codigo, 10),
@@ -88,7 +89,7 @@ public class ProductoController {
         System.out.print("Código: ");
         String codigo = sc.nextLine();
 
-        Producto p = service.buscarPorCodigo(codigo);
+        Articulo p = service.buscarPorCodigo(codigo);
 
         if (p != null) {
             System.out.println(p.descripcion);

@@ -1,24 +1,24 @@
 package com.inventory.service;
 
-import com.inventory.model.Producto;
+import com.inventory.model.Articulo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductoService {
+public class ArticuloService {
 
-    private List<Producto> productos = new ArrayList<>();
+    private List<Articulo> productos = new ArrayList<>();
     private int nextId = 1;
 
     public void agregar(String codigo, String descripcion, double precio, String categoria) {
-        productos.add(new Producto(nextId++, codigo, descripcion, precio, categoria));
+        productos.add(new Articulo(nextId++, codigo, descripcion, precio, categoria));
     }
 
-    public List<Producto> listar() {
+    public List<Articulo> listar() {
         return productos;
     }
 
-    public Producto buscarPorCodigo(String codigo) {
-        for (Producto p : productos) {
+    public Articulo buscarPorCodigo(String codigo) {
+        for (Articulo p : productos) {
             if (p.codigo.equalsIgnoreCase(codigo)) {
                 return p;
             }
@@ -27,7 +27,7 @@ public class ProductoService {
     }
 
     public boolean eliminar(String codigo) {
-        Producto p = buscarPorCodigo(codigo);
+        Articulo p = buscarPorCodigo(codigo);
         if (p != null) {
             productos.remove(p);
             return true;
