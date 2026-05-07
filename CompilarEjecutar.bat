@@ -2,6 +2,9 @@
 
 cd src\main\java
 
+echo ============================
+echo COMPILANDO...
+echo ============================
 javac ^
 com\inventory\model\Articulo.java ^
 com\inventory\service\ArticuloService.java ^
@@ -19,6 +22,11 @@ echo.
 echo ✅ Compilacion exitosa
 echo.
 
+echo ============================
+echo EJECUTANDO...
+echo ============================
+
 java com.inventory.InventoryApp
 
+echo.
 pause

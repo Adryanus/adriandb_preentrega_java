@@ -9,6 +9,21 @@ public class ArticuloController {
     private ArticuloService service = new ArticuloService();
     private Scanner sc = new Scanner(System.in);
 
+
+    // =========================
+    // CONSTANTES DE TABLA
+    // =========================
+
+    private static final String linea =
+    "+----+--------+---------------------+----------------+-----------------+";
+
+    private static final String formato =
+    "| %-2s | %-6s | %-19s | %-14s | %-16s |%n";
+
+    private static final String formato_articulo =
+    "| %-2d | %-6s | %-19s | %14.2f | %-16s |%n";
+
+
     public void iniciar() {
 
         int opcion;
@@ -81,28 +96,18 @@ public class ArticuloController {
 
     private void listar() {
 
-        String linea = "+----+----------+-------------------+--------+----------------+";
+    System.out.println("\n📋 LISTA DE ARTICULOS");
 
-        System.out.println("\n📋 LISTA DE ARTICULOS");
-        System.out.println(linea);
+    imprimirCabecera();
 
-        System.out.printf("| %-2s | %-8s | %-17s | %-9s | %-14s |%n",
-                "ID", "Código", "Descripción", "Precio", "Categoría");
-
-        System.out.println(linea);
-
-        for (Articulo p : service.listar()) {
-            System.out.printf("| %-2d | %-8s | %-17s | %-9.2f | %-14s |%n",
-                    p.id,
-                    truncar(p.codigo, 10),
-                    truncar(p.descripcion, 22),
-                    p.precio,
-                    truncar(p.categoria, 16));
-        }
-
-        System.out.println(linea);
-        pausa();
+    for (Articulo p : service.listar()) {
+        imprimirArticulo(p);
     }
+
+    System.out.println(linea);
+
+    pausa();
+}
 
     private void buscar() {
 
@@ -113,7 +118,7 @@ public class ArticuloController {
 
         if (p != null) {
 
-            String linea = "+----+----------+---------------------+----------------+------------------+";
+            
 
             System.out.println("\n🔍 ARTÍCULO ENCONTRADO");
 
@@ -132,7 +137,7 @@ public class ArticuloController {
     }
 
     private void modificar() {
-        String linea = "+----+----------+-------------------+--------+----------------+";
+        
         System.out.print("Ingrese código del artículo a modificar: ");
         String codigo = sc.nextLine();
 
@@ -216,24 +221,25 @@ public class ArticuloController {
 
     private void imprimirCabecera() {
 
-        String linea = "+----+----------+---------------------+----------------+------------------+";
+    System.out.println(linea);
 
-        System.out.println(linea);
+    System.out.printf(formato,
+            "ID",
+            "Código",
+            "Descripción",
+            "Precio",
+            "Categoría");
 
-        System.out.printf("| %-2s | %-8s | %-19s | %-12s | %-16s |%n",
-                "ID", "Código", "Descripción", "Precio", "Categoría");
-
-        System.out.println(linea);
-    }
+    System.out.println(linea);
+}
 
     private void imprimirArticulo(Articulo p) {
 
-        System.out.printf("| %-2d | %-8s | %-19s | %12.2f | %-16s |%n",
-                p.id,
-                truncar(p.codigo, 8),
-                truncar(p.descripcion, 19),
-                p.precio,
-                truncar(p.categoria, 16));
-
-    }
+    System.out.printf(formato_articulo,
+            p.id,
+            truncar(p.codigo, 6),
+            truncar(p.descripcion, 19),
+            p.precio,
+            truncar(p.categoria, 16));
+}
 }
