@@ -9,20 +9,15 @@ public class ArticuloController {
     private ArticuloService service = new ArticuloService();
     private Scanner sc = new Scanner(System.in);
 
-
     // =========================
     // CONSTANTES DE TABLA
     // =========================
 
-    private static final String linea =
-    "+----+--------+---------------------+----------------+-----------------+";
+    private static final String linea = "+----+--------+---------------------+----------------+-----------------+";
 
-    private static final String formato =
-    "| %-2s | %-6s | %-19s | %-14s | %-16s |%n";
+    private static final String formato = "| %-2s | %-6s | %-19s | %-14s | %-16s |%n";
 
-    private static final String formato_articulo =
-    "| %-2d | %-6s | %-19s | %14.2f | %-16s |%n";
-
+    private static final String formato_articulo = "| %-2d | %-6s | %-19s | %14.2f | %-16s |%n";
 
     public void iniciar() {
 
@@ -40,33 +35,33 @@ public class ArticuloController {
 
             System.out.print("Opción: ");
 
-            opcion = Integer.parseInt(sc.nextLine());
+            opcion = leerEntero();
 
             switch (opcion) {
 
                 case 1 -> {
                     agregar();
-                    
+
                 }
 
                 case 2 -> {
                     listar();
-                    
+
                 }
 
                 case 3 -> {
                     buscar();
-                    
+
                 }
 
                 case 4 -> {
                     modificar();
-                    
+
                 }
 
                 case 5 -> {
                     eliminar();
-                    
+
                 }
 
                 case 0 -> System.out.println("\n👋 Cerrando sistema...");
@@ -85,7 +80,7 @@ public class ArticuloController {
         String desc = sc.nextLine();
 
         System.out.print("Precio: ");
-        double precio = Double.parseDouble(sc.nextLine());
+        double precio = leerDouble();
 
         System.out.print("Categoría: ");
         String cat = sc.nextLine();
@@ -96,18 +91,18 @@ public class ArticuloController {
 
     private void listar() {
 
-    System.out.println("\n📋 LISTA DE ARTICULOS");
+        System.out.println("\n📋 LISTA DE ARTICULOS");
 
-    imprimirCabecera();
+        imprimirCabecera();
 
-    for (Articulo p : service.listar()) {
-        imprimirArticulo(p);
+        for (Articulo p : service.listar()) {
+            imprimirArticulo(p);
+        }
+
+        System.out.println(linea);
+
+        pausa();
     }
-
-    System.out.println(linea);
-
-    pausa();
-}
 
     private void buscar() {
 
@@ -118,8 +113,6 @@ public class ArticuloController {
 
         if (p != null) {
 
-            
-
             System.out.println("\n🔍 ARTÍCULO ENCONTRADO");
 
             imprimirCabecera();
@@ -127,7 +120,6 @@ public class ArticuloController {
             imprimirArticulo(p);
 
             System.out.println(linea);
-            
 
         } else {
             System.out.println("❌ Artículo no encontrado");
@@ -137,7 +129,7 @@ public class ArticuloController {
     }
 
     private void modificar() {
-        
+
         System.out.print("Ingrese código del artículo a modificar: ");
         String codigo = sc.nextLine();
 
@@ -176,7 +168,20 @@ public class ArticuloController {
         String nuevoPrecio = sc.nextLine();
 
         if (!nuevoPrecio.isEmpty()) {
-            p.precio = Double.parseDouble(nuevoPrecio);
+
+            while (true) {
+
+                try {
+
+                    p.precio = Double.parseDouble(nuevoPrecio);
+                    break;
+
+                } catch (NumberFormatException e) {
+
+                    System.out.print("❌ Precio inválido. Reingrese: ");
+                    nuevoPrecio = sc.nextLine();
+                }
+            }
         }
 
         System.out.print("Nueva categoría (" + p.categoria + "): ");
@@ -219,27 +224,65 @@ public class ArticuloController {
         return texto;
     }
 
+    private int leerEntero() {
+
+        while (true) {
+
+            try {
+
+                return Integer.parseInt(sc.nextLine());
+
+            } catch (NumberFormatException e) {
+
+                System.out.print("❌ Ingrese un número válido: ");
+            }
+        }
+    }
+
+    private double leerDouble() {
+
+        while (true) {
+
+            try {
+
+                double valor = Double.parseDouble(sc.nextLine());
+
+                if (valor < 0) {
+
+                    System.out.print("❌ El precio no puede ser negativo: ");
+                    continue;
+                }
+
+                return valor;
+
+            } catch (NumberFormatException e) {
+
+                System.out.print("❌ Ingrese un precio válido: ");
+            }
+        }
+    }
+
     private void imprimirCabecera() {
 
-    System.out.println(linea);
+        System.out.println(linea);
 
-    System.out.printf(formato,
-            "ID",
-            "Código",
-            "Descripción",
-            "Precio",
-            "Categoría");
+        System.out.printf(formato,
+                "ID",
+                "Código",
+                "Descripción",
+                "Precio",
+                "Categoría");
 
-    System.out.println(linea);
-}
+        System.out.println(linea);
+    }
 
     private void imprimirArticulo(Articulo p) {
 
-    System.out.printf(formato_articulo,
-            p.id,
-            truncar(p.codigo, 6),
-            truncar(p.descripcion, 19),
-            p.precio,
-            truncar(p.categoria, 16));
-}
+        System.out.printf(formato_articulo,
+                p.id,
+                truncar(p.codigo, 6),
+                truncar(p.descripcion, 19),
+                p.precio,
+                truncar(p.categoria, 16));
+    }
 }
