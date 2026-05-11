@@ -1,5 +1,5 @@
 @echo off
-
+cd /d "%~dp0"
 cd src\main\java
 
 echo ============================
