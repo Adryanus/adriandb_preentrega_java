@@ -19,9 +19,7 @@ public class ArticuloController {
     private Scanner sc =
             new Scanner(System.in);
 
-    // =========================
-    // TABLAS
-    // =========================
+
 
     private static final String LINEA =
     "+----+--------+---------------------+----------------+-----------------+";
@@ -32,9 +30,7 @@ public class ArticuloController {
     private static final String FORMATO_ARTICULO =
     "| %-2d | %-6s | %-19s | %14.2f | %-16s |%n";
 
-    // =========================
-    // INICIO
-    // =========================
+  
 
     public void iniciar() {
 
@@ -92,9 +88,7 @@ public class ArticuloController {
         } while (opcion != 0);
     }
 
-    // =========================
-    // PRECARGAR CATEGORIAS
-    // =========================
+  
 
     private void precargarCategorias() {
 
@@ -129,9 +123,7 @@ public class ArticuloController {
         );
     }
 
-    // =========================
-    // AGREGAR
-    // =========================
+   
 
     private void agregar() {
 
@@ -194,9 +186,6 @@ public class ArticuloController {
         pausa();
     }
 
-    // =========================
-    // LISTAR
-    // =========================
 
     private void listar() {
 
@@ -216,9 +205,7 @@ public class ArticuloController {
         pausa();
     }
 
-    // =========================
-    // BUSCAR
-    // =========================
+
 
     private void buscar() {
 
@@ -256,9 +243,7 @@ public class ArticuloController {
         pausa();
     }
 
-    // =========================
-    // MODIFICAR
-    // =========================
+ 
 
     private void modificar() {
 
@@ -291,9 +276,7 @@ public class ArticuloController {
 
         System.out.println(LINEA);
 
-        // =========================
-        // CODIGO
-        // =========================
+    
 
         System.out.print(
                 "Nuevo codigo (" +
@@ -309,9 +292,6 @@ public class ArticuloController {
             p.setCodigo(nuevoCodigo);
         }
 
-        // =========================
-        // DESCRIPCION
-        // =========================
 
         System.out.print(
                 "Nueva descripcion (" +
@@ -329,9 +309,7 @@ public class ArticuloController {
             );
         }
 
-        // =========================
-        // PRECIO
-        // =========================
+        
 
         System.out.print(
                 "Nuevo precio (" +
@@ -363,9 +341,6 @@ public class ArticuloController {
             }
         }
 
-        // =========================
-        // CATEGORIA
-        // =========================
 
         listarCategorias();
 
@@ -414,9 +389,7 @@ public class ArticuloController {
         pausa();
     }
 
-    // =========================
-    // ELIMINAR
-    // =========================
+  
 
     private void eliminar() {
 
@@ -441,9 +414,6 @@ public class ArticuloController {
         pausa();
     }
 
-    // =========================
-    // LISTAR CATEGORIAS
-    // =========================
 
     private void listarCategorias() {
 
@@ -502,9 +472,7 @@ public class ArticuloController {
         pausa();
     }
 
-    // =========================
-    // IMPRESION
-    // =========================
+ 
 
     private void imprimirCabecera() {
 
@@ -551,9 +519,7 @@ public class ArticuloController {
         );
     }
 
-    // =========================
-    // VALIDACIONES
-    // =========================
+
 
     private int leerEntero() {
 
@@ -609,9 +575,7 @@ public class ArticuloController {
         }
     }
 
-    // =========================
-    // UTILIDADES
-    // =========================
+    
 
     private String truncar(
             String texto,

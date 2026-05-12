@@ -1,6 +1,4 @@
-// ========================================
-// CategoriaService.java
-// ========================================
+
 
 package com.inventory.service;
 
@@ -11,18 +9,14 @@ import java.util.List;
 
 public class CategoriaService {
 
-    // =========================
-    // ATRIBUTOS
-    // =========================
+ 
 
     private List<Categoria> categorias =
             new ArrayList<>();
 
     private int nextId = 1;
 
-    // =========================
-    // AGREGAR
-    // =========================
+
 
     public void agregar(String codigo,
                         String nombre,
@@ -39,18 +33,13 @@ public class CategoriaService {
         );
     }
 
-    // =========================
-    // LISTAR
-    // =========================
 
     public List<Categoria> listar() {
 
         return categorias;
     }
 
-    // =========================
-    // BUSCAR
-    // =========================
+  
 
     public Categoria buscarPorCodigo(
             String codigo

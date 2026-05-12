@@ -1,6 +1,3 @@
-// ========================================
-// ArticuloService.java
-// ========================================
 
 package com.inventory.service;
 
@@ -12,18 +9,14 @@ import java.util.List;
 
 public class ArticuloService {
 
-    // =========================
-    // ATRIBUTOS
-    // =========================
+   
 
     private List<Articulo> articulos =
             new ArrayList<>();
 
     private int nextId = 1;
 
-    // =========================
-    // AGREGAR
-    // =========================
+
 
     public void agregar(String codigo,
                         String descripcion,
@@ -42,18 +35,13 @@ public class ArticuloService {
         );
     }
 
-    // =========================
-    // LISTAR
-    // =========================
+  
 
     public List<Articulo> listar() {
 
         return articulos;
     }
 
-    // =========================
-    // BUSCAR
-    // =========================
 
     public Articulo buscarPorCodigo(
             String codigo
@@ -73,9 +61,7 @@ public class ArticuloService {
         return null;
     }
 
-    // =========================
-    // ELIMINAR
-    // =========================
+ 
 
     public boolean eliminar(
             String codigo

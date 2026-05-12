@@ -2,9 +2,7 @@ package com.inventory.model.articulo;
 
 public class Articulo {
 
-    // =========================
-    // ATRIBUTOS
-    // =========================
+  
 
     private int id;
 
@@ -16,9 +14,7 @@ public class Articulo {
 
     private Categoria categoria;
 
-    // =========================
-    // CONSTRUCTOR
-    // =========================
+  
 
     public Articulo(int id,
                      String codigo,
@@ -33,9 +29,6 @@ public class Articulo {
         this.categoria = categoria;
     }
 
-    // =========================
-    // GETTERS
-    // =========================
 
     public int getId() {
 
@@ -62,9 +55,7 @@ public class Articulo {
         return categoria;
     }
 
-    // =========================
-    // SETTERS
-    // =========================
+
 
     public void setId(int id) {
 
@@ -91,9 +82,7 @@ public class Articulo {
         this.categoria = categoria;
     }
 
-    // =========================
-    // TOSTRING
-    // =========================
+ 
 
     @Override
     public String toString() {

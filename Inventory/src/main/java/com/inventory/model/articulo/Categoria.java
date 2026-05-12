@@ -2,9 +2,7 @@ package com.inventory.model.articulo;
 
 public class Categoria {
 
-    // =========================
-    // ATRIBUTOS
-    // =========================
+
 
     private int id;
 
@@ -14,9 +12,7 @@ public class Categoria {
 
     private String descripcion;
 
-    // =========================
-    // CONSTRUCTOR
-    // =========================
+  
 
     public Categoria(int id,
                      String codigo,
@@ -29,9 +25,7 @@ public class Categoria {
         this.descripcion = descripcion;
     }
 
-    // =========================
-    // GETTERS
-    // =========================
+  
 
     public int getId() {
 
@@ -53,9 +47,7 @@ public class Categoria {
         return descripcion;
     }
 
-    // =========================
-    // SETTERS
-    // =========================
+
 
     public void setId(int id) {
 
@@ -77,9 +69,6 @@ public class Categoria {
         this.descripcion = descripcion;
     }
 
-    // =========================
-    // TOSTRING
-    // =========================
 
     @Override
     public String toString() {
