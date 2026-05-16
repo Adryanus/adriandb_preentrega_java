@@ -1,8 +1,6 @@
 package com.inventory.controller;
 
-import com.inventory.model.articulo.Articulo;
-import com.inventory.model.articulo.Categoria;
-
+import com.inventory.model.articulo.*;
 import com.inventory.service.ArticuloService;
 import com.inventory.service.CategoriaService;
 
@@ -10,480 +8,468 @@ import java.util.Scanner;
 
 public class ArticuloController {
 
-        private ArticuloService service = new ArticuloService();
+    // =========================
+    // SERVICES
+    // =========================
 
-        private CategoriaService categoriaService = new CategoriaService();
+    private ArticuloService service =
+            new ArticuloService();
 
-        private Scanner sc = new Scanner(System.in);
+    private CategoriaService categoriaService =
+            new CategoriaService();
 
-        private static final String LINEA = "+----+--------+-----------------------+----------------+------------------+";
+    // =========================
+    // SCANNER
+    // =========================
 
-        private static final String FORMATO = "| %-2s | %-6s | %-21s | %-14s | %-16s |%n";
+    private Scanner sc =
+            new Scanner(System.in);
 
-        private static final String FORMATO_ARTICULO = "| %-2d | %-6s | %-21s | %14.2f | %-16s |%n";
+    // =========================
+    // ID AUTOINCREMENTAL
+    // =========================
 
-        public void iniciar() {
+    private int nextId = 1;
 
-                if (categoriaService.listar().isEmpty()) {
+    // =========================
+    // TABLA
+    // =========================
 
-                        precargarCategorias();
-                }
+    private static final String LINEA =
+            "+----+--------+-----------------------+----------------+------------------+";
 
-                int opcion;
+    private static final String FORMATO =
+            "| %-2s | %-6s | %-21s | %-14s | %-16s |%n";
 
-                do {
+    private static final String FORMATO_ARTICULO =
+            "| %-2d | %-6s | %-21s | %14.2f | %-16s |%n";
 
-                        System.out.println("\n📦 INVENTARIO");
-                        System.out.println("1. Agregar");
-                        System.out.println("2. Listar");
-                        System.out.println("3. Buscar");
-                        System.out.println("4. Modificar");
-                        System.out.println("5. Eliminar");
-                        System.out.println("6. Listar categorias");
-                        System.out.println("0. Salir");
+    // =========================
+    // INICIO
+    // =========================
 
-                        System.out.print("Opcion: ");
+    public void iniciar() {
 
-                        opcion = leerEntero();
+        cargarCategorias();
 
-                        switch (opcion) {
+        int opcion;
 
-                                case 1 -> agregar();
+        do {
 
-                                case 2 -> listar();
+            System.out.println("\n📦 INVENTARIO");
+            System.out.println("1. Agregar");
+            System.out.println("2. Listar");
+            System.out.println("3. Buscar");
+            System.out.println("4. Eliminar");
+            System.out.println("5. Listar Categorias");
+            System.out.println("0. Salir");
 
-                                case 3 -> buscar();
+            System.out.print("Opcion: ");
 
-                                case 4 -> modificar();
+            opcion = leerEntero();
 
-                                case 5 -> eliminar();
+            switch (opcion) {
 
-                                case 6 -> listarCategorias();
+                case 1 -> agregar();
 
-                                case 0 ->
-                                        System.out.println(
-                                                        "\n👋 Cerrando sistema...");
+                case 2 -> listar();
 
-                                default -> {
+                case 3 -> buscar();
 
-                                        System.out.println(
-                                                        "\n❌ Opcion invalida");
+                case 4 -> eliminar();
 
-                                        pausa();
-                                }
-                        }
+                case 5 -> listarCategorias();
+            }
 
-                } while (opcion != 0);
+        } while (opcion != 0);
+    }
+
+    // =========================
+    // AGREGAR
+    // =========================
+
+    private void agregar() {
+
+        System.out.println("\nTIPO DE ARTICULO");
+
+        System.out.println("1. Electronico");
+        System.out.println("2. Comestible");
+        System.out.println("3. Ropa");
+
+        System.out.print("Opcion: ");
+
+        int tipo = leerEntero();
+
+        System.out.print("Codigo: ");
+        String codigo = sc.nextLine();
+
+        System.out.print("Descripcion: ");
+        String descripcion = sc.nextLine();
+
+        System.out.print("Precio: ");
+        double precio = leerDouble();
+
+        listarCategorias();
+
+        System.out.print("Codigo categoria: ");
+
+        String codCat = sc.nextLine();
+
+        Categoria categoria =
+                categoriaService.buscarPorCodigo(codCat);
+
+        if (categoria == null) {
+
+            System.out.println(
+                    "❌ Categoria inexistente"
+            );
+
+            pausa();
+
+            return;
         }
 
-        private void precargarCategorias() {
+        Articulo articulo = null;
 
-                categoriaService.agregar(
-                                "ELEC",
-                                "Electronica",
-                                "Dispositivos electronicos");
+        switch (tipo) {
 
-                categoriaService.agregar(
-                                "ROPA",
-                                "Ropa",
-                                "Prendas de vestir");
+            // =====================
+            // ELECTRONICO
+            // =====================
 
-                categoriaService.agregar(
-                                "ALIM",
-                                "Alimentos",
-                                "Productos alimenticios");
-
-                categoriaService.agregar(
-                                "HOGAR",
-                                "Hogar",
-                                "Articulos para el hogar");
-
-                categoriaService.agregar(
-                                "DEP",
-                                "Deportes",
-                                "Articulos deportivos");
-        }
-
-        private void agregar() {
-
-                System.out.println(
-                                "\n➕ AGREGAR ARTICULO");
-
-                System.out.print("Codigo: ");
-
-                String codigo = sc.nextLine();
-
-                System.out.print("Descripcion: ");
-
-                String descripcion = sc.nextLine();
-
-                System.out.print("Precio: ");
-
-                double precio = leerDouble();
-
-                listarCategorias();
+            case 1 -> {
 
                 System.out.print(
-                                "Codigo categoria: ");
+                        "Garantia en meses: "
+                );
 
-                String codigoCategoria = sc.nextLine();
+                int garantia =
+                        leerEntero();
 
-                Categoria categoria = categoriaService
-                                .buscarPorCodigo(
-                                                codigoCategoria);
-
-                if (categoria == null) {
-
-                        System.out.println(
-                                        "❌ Categoria inexistente");
-
-                        pausa();
-
-                        return;
-                }
-
-                service.agregar(
+                articulo =
+                        new ArticuloElectronico(
+                                generarId(),
                                 codigo,
                                 descripcion,
                                 precio,
-                                categoria);
+                                categoria,
+                                garantia
+                        );
+            }
 
-                System.out.println(
-                                "\n✅ Articulo agregado");
+            // =====================
+            // COMESTIBLE
+            // =====================
 
-                pausa();
-        }
-
-        private void listar() {
-
-                System.out.println(
-                                "\n📋 LISTA DE ARTICULOS");
-
-                imprimirCabecera();
-
-                for (Articulo p : service.listar()) {
-
-                        imprimirArticulo(p);
-                }
-
-                System.out.println(LINEA);
-
-                pausa();
-        }
-
-        private void buscar() {
+            case 2 -> {
 
                 System.out.print(
-                                "Ingrese codigo: ");
+                        "Fecha vencimiento: "
+                );
 
-                String codigo = sc.nextLine();
+                String vencimiento =
+                        sc.nextLine();
 
-                Articulo p = service.buscarPorCodigo(
-                                codigo);
+                articulo =
+                        new ArticuloComestible(
+                                generarId(),
+                                codigo,
+                                descripcion,
+                                precio,
+                                categoria,
+                                vencimiento
+                        );
+            }
 
-                if (p != null) {
+            // =====================
+            // ROPA
+            // =====================
 
-                        System.out.println(
-                                        "\n🔍 ARTICULO ENCONTRADO");
+            case 3 -> {
 
-                        imprimirCabecera();
+                System.out.print("Talle: ");
+                String talle = sc.nextLine();
 
-                        imprimirArticulo(p);
+                System.out.print("Color: ");
+                String color = sc.nextLine();
 
-                        System.out.println(LINEA);
+                articulo =
+                        new ArticuloRopa(
+                                generarId(),
+                                codigo,
+                                descripcion,
+                                precio,
+                                categoria,
+                                talle,
+                                color
+                        );
+            }
 
-                } else {
+            default -> {
 
-                        System.out.println(
-                                        "❌ Articulo no encontrado");
-                }
+                System.out.println(
+                        "❌ Tipo invalido"
+                );
 
                 pausa();
+
+                return;
+            }
         }
 
-        private void modificar() {
+        service.agregar(articulo);
 
-                System.out.print(
-                                "Ingrese codigo del articulo: ");
+        System.out.println(
+                "\n✅ Articulo agregado"
+        );
 
-                String codigo = sc.nextLine();
+        articulo.mostrarDetalle();
 
-                Articulo p = service.buscarPorCodigo(
-                                codigo);
+        pausa();
+    }
 
-                if (p == null) {
+    // =========================
+    // LISTAR
+    // =========================
 
-                        System.out.println(
-                                        "❌ Articulo no encontrado");
+    private void listar() {
 
-                        pausa();
+        System.out.println(
+                "\n📋 LISTA DE ARTICULOS"
+        );
 
-                        return;
-                }
+        imprimirCabecera();
 
-                imprimirCabecera();
+        for (Articulo a : service.listar()) {
 
-                imprimirArticulo(p);
+            imprimirArticulo(a);
 
-                System.out.println(LINEA);
-
-                System.out.print(
-                                "Nuevo codigo (" +
-                                                p.getCodigo() +
-                                                "): ");
-
-                String nuevoCodigo = sc.nextLine();
-
-                if (!nuevoCodigo.isEmpty()) {
-
-                        p.setCodigo(nuevoCodigo);
-                }
-
-                System.out.print(
-                                "Nueva descripcion (" +
-                                                p.getDescripcion() +
-                                                "): ");
-
-                String nuevaDescripcion = sc.nextLine();
-
-                if (!nuevaDescripcion.isEmpty()) {
-
-                        p.setDescripcion(
-                                        nuevaDescripcion);
-                }
-
-                System.out.print(
-                                "Nuevo precio (" +
-                                                p.getPrecio() +
-                                                "): ");
-
-                String nuevoPrecio = sc.nextLine();
-
-                if (!nuevoPrecio.isEmpty()) {
-
-                        try {
-
-                                p.setPrecio(
-
-                                                Double.parseDouble(
-                                                                nuevoPrecio));
-
-                        } catch (NumberFormatException e) {
-
-                                System.out.println(
-                                                "❌ Precio invalido");
-                        }
-                }
-
-                listarCategorias();
-
-                System.out.print(
-                                "Nueva categoria (" +
-                                                p.getCategoria()
-                                                                .getCodigo()
-                                                +
-                                                "): ");
-
-                String nuevaCategoria = sc.nextLine();
-
-                if (!nuevaCategoria.isEmpty()) {
-
-                        Categoria categoria = categoriaService
-                                        .buscarPorCodigo(
-                                                        nuevaCategoria);
-
-                        if (categoria != null) {
-
-                                p.setCategoria(
-                                                categoria);
-
-                        } else {
-
-                                System.out.println(
-                                                "❌ Categoria inexistente");
-                        }
-                }
-
-                System.out.println(
-                                "\n✅ Articulo modificado");
-
-                imprimirCabecera();
-
-                imprimirArticulo(p);
-
-                System.out.println(LINEA);
-
-                pausa();
+            a.mostrarDetalle();
         }
 
-        private void eliminar() {
+        System.out.println(LINEA);
 
-                System.out.print("Codigo: ");
+        pausa();
+    }
 
-                String codigo = sc.nextLine();
+    // =========================
+    // BUSCAR
+    // =========================
 
-                if (service.eliminar(codigo)) {
+    private void buscar() {
 
-                        System.out.println(
-                                        "🗑️ Eliminado");
+        System.out.print(
+                "Codigo: "
+        );
 
-                } else {
-
-                        System.out.println(
-                                        "❌ No existe");
-                }
-
-                pausa();
-        }
-
-        private void listarCategorias() {
-
-                String lineaCategoria = "+----+--------+----------------------+--------------------------+";
-
-                System.out.println(
-                                "\n📚 LISTA DE CATEGORIAS");
-
-                System.out.println(
-                                lineaCategoria);
-
-                System.out.printf(
-                                "| %-2s | %-6s | %-20s | %-24s |%n",
-                                "ID",
-                                "Codigo",
-                                "Nombre",
-                                "Descripcion");
-
-                System.out.println(
-                                lineaCategoria);
-
-                for (Categoria c : categoriaService.listar()) {
-
-                        System.out.printf(
-                                        "| %-2d | %-6s | %-20s | %-24s |%n",
-
-                                        c.getId(),
-
-                                        truncar(
-                                                        c.getCodigo(),
-                                                        6),
-
-                                        truncar(
-                                                        c.getNombre(),
-                                                        20),
-
-                                        truncar(
-                                                        c.getDescripcion(),
-                                                        24));
-                }
-
-                System.out.println(
-                                lineaCategoria);
-
-                pausa();
-        }
-
-        private void imprimirCabecera() {
-
-                System.out.println(LINEA);
-
-                System.out.printf(
-                                FORMATO,
-                                "ID",
-                                "Codigo",
-                                "Descripcion",
-                                "Precio",
-                                "Categoria");
-
-                System.out.println(LINEA);
-        }
-
-        private void imprimirArticulo(
-                        Articulo p) {
-
-                System.out.printf(
-                                FORMATO_ARTICULO,
-
-                                p.getId(),
-
-                                truncar(
-                                                p.getCodigo(),
-                                                6),
-
-                                truncar(
-                                                p.getDescripcion(),
-                                                19),
-
-                                p.getPrecio(),
-
-                                truncar(
-                                                p.getCategoria()
-                                                                .getNombre(),
-                                                16));
-        }
-
-        private int leerEntero() {
-
-                while (true) {
-
-                        try {
-
-                                return Integer.parseInt(
-                                                sc.nextLine());
-
-                        } catch (NumberFormatException e) {
-
-                                System.out.print(
-                                                "❌ Ingrese un numero valido: ");
-                        }
-                }
-        }
-
-        private double leerDouble() {
-
-                while (true) {
-
-                        try {
-
-                                double valor = Double.parseDouble(
-                                                sc.nextLine());
-
-                                if (valor < 0) {
-
-                                        System.out.print(
-                                                        "❌ El precio no puede ser negativo: ");
-
-                                        continue;
-                                }
-
-                                return valor;
-
-                        } catch (NumberFormatException e) {
-
-                                System.out.print(
-                                                "❌ Ingrese un precio valido: ");
-                        }
-                }
-        }
-
-        private String truncar(
-                        String texto,
-                        int max) {
-
-                if (texto.length() > max) {
-
-                        return texto.substring(
-                                        0,
-                                        max - 3) + "...";
-                }
-
-                return texto;
-        }
-
-        private void pausa() {
-
-                System.out.println(
-                                "\nPresione ENTER para continuar...");
-
+        String codigo =
                 sc.nextLine();
+
+        Articulo a =
+                service.buscarPorCodigo(codigo);
+
+        if (a != null) {
+
+            imprimirCabecera();
+
+            imprimirArticulo(a);
+
+            a.mostrarDetalle();
+
+            System.out.println(LINEA);
+
+        } else {
+
+            System.out.println(
+                    "❌ No encontrado"
+            );
         }
+
+        pausa();
+    }
+
+    // =========================
+    // ELIMINAR
+    // =========================
+
+    private void eliminar() {
+
+        System.out.print(
+                "Codigo: "
+        );
+
+        String codigo =
+                sc.nextLine();
+
+        if (service.eliminar(codigo)) {
+
+            System.out.println(
+                    "🗑️ Eliminado"
+            );
+
+        } else {
+
+            System.out.println(
+                    "❌ No existe"
+            );
+        }
+
+        pausa();
+    }
+
+    // =========================
+    // LISTAR CATEGORIAS
+    // =========================
+
+    private void listarCategorias() {
+
+        System.out.println(
+                "\n📂 CATEGORIAS"
+        );
+
+        for (Categoria c :
+                categoriaService.listar()) {
+
+            System.out.println(
+                    c.getCodigo()
+                    + " - "
+                    + c.getNombre()
+            );
+        }
+    }
+
+    // =========================
+    // CARGAR CATEGORIAS
+    // =========================
+
+    private void cargarCategorias() {
+
+        categoriaService.agregar(
+                "ELEC",
+                "Electronica",
+                "Productos electronicos"
+        );
+
+        categoriaService.agregar(
+                "ALIM",
+                "Alimentos",
+                "Productos alimenticios"
+        );
+
+        categoriaService.agregar(
+                "ROPA",
+                "Ropa",
+                "Indumentaria"
+        );
+    }
+
+    // =========================
+    // TABLA
+    // =========================
+
+    private void imprimirCabecera() {
+
+        System.out.println(LINEA);
+
+        System.out.printf(
+                FORMATO,
+                "ID",
+                "Codigo",
+                "Descripcion",
+                "Precio",
+                "Categoria"
+        );
+
+        System.out.println(LINEA);
+    }
+
+    private void imprimirArticulo(
+            Articulo a
+    ) {
+
+        System.out.printf(
+                FORMATO_ARTICULO,
+                a.getId(),
+                truncar(a.getCodigo(), 6),
+                truncar(a.getDescripcion(), 21),
+                a.getPrecio(),
+                truncar(
+                        a.getCategoria()
+                         .getNombre(),
+                        16
+                )
+        );
+    }
+
+    // =========================
+    // UTILS
+    // =========================
+
+    private int generarId() {
+
+        return nextId++;
+    }
+
+    private String truncar(
+            String texto,
+            int max
+    ) {
+
+        if (texto.length() > max) {
+
+            return texto.substring(
+                    0,
+                    max - 3
+            ) + "...";
+        }
+
+        return texto;
+    }
+
+    private void pausa() {
+
+        System.out.println(
+                "\nPresione ENTER..."
+        );
+
+        sc.nextLine();
+    }
+
+    private int leerEntero() {
+
+        while (true) {
+
+            try {
+
+                return Integer.parseInt(
+                        sc.nextLine()
+                );
+
+            } catch (Exception e) {
+
+                System.out.print(
+                        "❌ Numero invalido: "
+                );
+            }
+        }
+    }
+
+    private double leerDouble() {
+
+        while (true) {
+
+            try {
+
+                return Double.parseDouble(
+                        sc.nextLine()
+                );
+
+            } catch (Exception e) {
+
+                System.out.print(
+                        "❌ Numero invalido: "
+                );
+            }
+        }
+    }
 }

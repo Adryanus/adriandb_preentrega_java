@@ -2,8 +2,6 @@ package com.inventory.model.articulo;
 
 public class Categoria {
 
-
-
     private int id;
 
     private String codigo;
@@ -12,12 +10,10 @@ public class Categoria {
 
     private String descripcion;
 
-  
-
     public Categoria(int id,
-                     String codigo,
-                     String nombre,
-                     String descripcion) {
+            String codigo,
+            String nombre,
+            String descripcion) {
 
         this.id = id;
         this.codigo = codigo;
@@ -25,54 +21,24 @@ public class Categoria {
         this.descripcion = descripcion;
     }
 
-  
-
     public int getId() {
-
         return id;
     }
 
     public String getCodigo() {
-
         return codigo;
     }
 
     public String getNombre() {
-
         return nombre;
     }
 
     public String getDescripcion() {
-
         return descripcion;
     }
 
-
-
-    public void setId(int id) {
-
-        this.id = id;
-    }
-
-    public void setCodigo(String codigo) {
-
-        this.codigo = codigo;
-    }
-
-    public void setNombre(String nombre) {
-
-        this.nombre = nombre;
-    }
-
-    public void setDescripcion(String descripcion) {
-
-        this.descripcion = descripcion;
-    }
-
-
     @Override
     public String toString() {
-
         return nombre;
     }
 }
