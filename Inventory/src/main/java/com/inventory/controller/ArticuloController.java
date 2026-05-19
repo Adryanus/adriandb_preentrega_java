@@ -33,11 +33,11 @@ public class ArticuloController {
         // TABLA
         // =========================
 
-        private static final String LINEA = "+----+--------+----------------------+--------------+--------------+-----------+-------------+--------+--------+------------+";
+        private static final String LINEA = "+----+--------+----------------------+--------------+--------------+--------------+-----------+-------------+--------+--------+------------+";
 
-        private static final String FORMATO = "| %-2s | %-6s | %-20s | %-12s | %-12s | %-9s | %-11s | %-6s | %-6s | %-10s |%n";
+        private static final String FORMATO = "| %-2s | %-6s | %-20s | %-12s | %-12s | %-12s | %-9s | %-11s | %-6s | %-6s | %-10s |%n";
 
-        private static final String FORMATO_ARTICULO = "| %-2d | %-6s | %-20s | %12.2f | %-12s | %-9s | %-11s | %-6s | %-6s | %-10s |%n";
+        private static final String FORMATO_ARTICULO = "| %-2d | %-6s | %-20s | %12.2f | %12.2f | %-12s | %-9s | %-11s | %-6s | %-6s | %-10s |%n";
 
         // =========================
         // INICIO
@@ -45,40 +45,60 @@ public class ArticuloController {
 
         public void iniciar() {
 
-                cargarCategorias();
+    cargarCategorias();
 
-                int opcion;
+    int opcion;
 
-                do {
+    do {
 
-                        System.out.println("\n📦 INVENTARIO");
+        System.out.println("\n📦 INVENTARIO");
 
-                        System.out.println("1. Agregar");
-                        System.out.println("2. Listar");
-                        System.out.println("3. Buscar");
-                        System.out.println("4. Eliminar");
-                        System.out.println("5. Listar Categorias");
-                        System.out.println("0. Salir");
+        System.out.println("1. Agregar");
+        System.out.println("2. Listar");
+        System.out.println("3. Buscar");
+        System.out.println("4. Eliminar");
+        System.out.println("5. Listar Categorias");
+        System.out.println("0. Salir");
 
-                        System.out.print("Opcion: ");
+        System.out.print("Opcion: ");
 
-                        opcion = leerEntero();
+        opcion = leerEntero();
 
-                        switch (opcion) {
+        switch (opcion) {
 
-                                case 1 -> agregar();
+            case 1 -> agregar();
 
-                                case 2 -> listar();
+            case 2 -> listar();
 
-                                case 3 -> buscar();
+            case 3 -> buscar();
 
-                                case 4 -> eliminar();
+            case 4 -> eliminar();
 
-                                case 5 -> listarCategorias();
-                        }
+            case 5 -> {
 
-                } while (opcion != 0);
+                listarCategorias();
+
+                pausa();
+            }
+
+            case 0 ->
+
+                System.out.println(
+                        "\n👋 Saliendo..."
+                );
+
+            default -> {
+
+                System.out.println(
+                        "❌ Opcion invalida"
+                );
+
+                pausa();
+            }
         }
+
+    } while (opcion != 0);
+}
 
         // =========================
         // AGREGAR
@@ -276,23 +296,21 @@ public class ArticuloController {
 
         private void listar() {
 
-                System.out.println(
-                                "\n📋 LISTA DE ARTICULOS");
+    System.out.println(
+            "\n📋 LISTA DE ARTICULOS"
+    );
 
-                imprimirCabecera();
+    imprimirCabecera();
 
-                for (Articulo a : service.listar()) {
+    for (Articulo a : service.listar()) {
 
-                        imprimirArticulo(a);
+        imprimirArticulo(a);
+    }
 
-                        a.mostrarDetalle();
+    System.out.println(LINEA);
 
-                        System.out.println(
-                                        LINEA);
-                }
-
-                pausa();
-        }
+    pausa();
+}
 
         // =========================
         // BUSCAR
@@ -398,109 +416,129 @@ public class ArticuloController {
 
         private void imprimirCabecera() {
 
-                System.out.println(LINEA);
+    System.out.println(LINEA);
 
-                System.out.printf(
-                                FORMATO,
-                                "ID",
-                                "Codigo",
-                                "Descripcion",
-                                "Precio",
-                                "Categoria",
-                                "Garantia",
-                                "Vencimiento",
-                                "Talle",
-                                "Color",
-                                "Temporada");
+    System.out.printf(
+            FORMATO,
 
-                System.out.println(LINEA);
-        }
+            "ID",
+            "Codigo",
+            "Descripcion",
+            "Precio",
+            "PrecioFinal",
+            "Categoria",
+            "Garantia",
+            "Vencimiento",
+            "Talle",
+            "Color",
+            "Temporada"
+    );
+
+    System.out.println(LINEA);
+}
 
         private void imprimirArticulo(
-                        Articulo a) {
+        Articulo a
+) {
 
-                String garantia = "";
+    String garantia = "";
 
-                String vencimiento = "";
+    String vencimiento = "";
 
-                String talle = "";
+    String talle = "";
 
-                String color = "";
+    String color = "";
 
-                String temporada = "";
+    String temporada = "";
 
-                // =====================
-                // ELECTRONICO
-                // =====================
+    // =====================
+    // ELECTRONICO
+    // =====================
 
-                if (a instanceof ArticuloElectronico e) {
+    if (a instanceof ArticuloElectronico e) {
 
-                        garantia = e.getGarantiaMeses()
-                                        + " meses";
-                }
+        garantia =
+                e.getGarantiaMeses()
+                + " meses";
+    }
 
-                // =====================
-                // COMESTIBLE
-                // =====================
+    // =====================
+    // COMESTIBLE
+    // =====================
 
-                if (a instanceof ArticuloComestible c) {
+    if (a instanceof ArticuloComestible c) {
 
-                        vencimiento = c.getVencimiento();
-                }
+        vencimiento =
+                c.getVencimiento();
+    }
 
-                // =====================
-                // ROPA
-                // =====================
+    // =====================
+    // ROPA
+    // =====================
 
-                if (a instanceof ArticuloRopa r) {
+    if (a instanceof ArticuloRopa r) {
 
-                        talle = r.getTalle();
+        talle =
+                r.getTalle();
 
-                        color = r.getColor();
+        color =
+                r.getColor();
 
-                        temporada = r.getTemporada();
-                }
+        temporada =
+                r.getTemporada();
+    }
 
-                System.out.printf(
-                                FORMATO_ARTICULO,
+    System.out.printf(
+            FORMATO_ARTICULO,
 
-                                a.getId(),
+            a.getId(),
 
-                                truncar(
-                                                a.getCodigo(),
-                                                6),
+            truncar(
+                    a.getCodigo(),
+                    6
+            ),
 
-                                truncar(
-                                                a.getDescripcion(),
-                                                20),
+            truncar(
+                    a.getDescripcion(),
+                    20
+            ),
 
-                                a.calcularPrecioFinal(),
+            a.getPrecio(),
 
-                                truncar(
-                                                a.getCategoria()
-                                                                .getNombre(),
-                                                12),
+            a.calcularPrecioFinal(),
 
-                                truncar(
-                                                garantia,
-                                                9),
+            truncar(
+                    a.getCategoria()
+                     .getNombre(),
+                    12
+            ),
 
-                                truncar(
-                                                vencimiento,
-                                                11),
+            truncar(
+                    garantia,
+                    9
+            ),
 
-                                truncar(
-                                                talle,
-                                                6),
+            truncar(
+                    vencimiento,
+                    11
+            ),
 
-                                truncar(
-                                                color,
-                                                6),
+            truncar(
+                    talle,
+                    6
+            ),
 
-                                truncar(
-                                                temporada,
-                                                10));
-        }
+            truncar(
+                    color,
+                    6
+            ),
+
+            truncar(
+                    temporada,
+                    10
+            )
+    );
+}
 
         // =========================
         // UTILS

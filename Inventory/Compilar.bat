@@ -44,22 +44,3 @@ echo.
 echo ✅ Compilacion exitosa
 echo.
 
-echo ============================
-echo EJECUTANDO...
-echo ============================
-
-java com.inventory.InventoryApp
-
-pause
-
-echo.
-echo Compilacion exitosa
-echo.
-
-echo ============================
-echo EJECUTANDO...
-echo ============================
-
-java com.inventory.InventoryApp
-
-pause
