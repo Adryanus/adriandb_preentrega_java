@@ -70,4 +70,27 @@ public class ArticuloService {
 
         return false;
     }
+
+    // =========================
+    // VALIDAR CATEGORIA EN USO
+    // =========================
+
+    public boolean existeCategoriaEnUso(
+            String codigoCategoria
+    ) {
+
+        for (Articulo a : articulos) {
+
+            if (a.getCategoria()
+                    .getCodigo()
+                    .equalsIgnoreCase(
+                            codigoCategoria
+                    )) {
+
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
