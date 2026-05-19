@@ -32,12 +32,9 @@ public class ArticuloRopa
 
         this.color = color;
 
-        this.temporada = temporada;
+        this.temporada =
+                temporada;
     }
-
-    // =========================
-    // GETTERS Y SETTERS
-    // =========================
 
     public String getTalle() {
 
@@ -72,63 +69,43 @@ public class ArticuloRopa
             String temporada
     ) {
 
-        this.temporada = temporada;
+        this.temporada =
+                temporada;
     }
 
     // =========================
-    // MOSTRAR DETALLE
+    // DETALLE
     // =========================
 
     @Override
-    public void mostrarDetalle() {
+    public String obtenerDetalle() {
 
-        System.out.println(
-                "👕 Talle: " +
-                talle +
-                " | Color: " +
-                color
-        );
-
-        System.out.println(
-                "☀️ Temporada: " +
-                temporada
-        );
-
-        System.out.println(
-                "💲 Precio final: $" +
-                calcularPrecioFinal()
-        );
+        return
+                "👕 Talle: "
+                + talle
+                + " | Color: "
+                + color
+                + " | Temporada: "
+                + temporada;
     }
 
     // =========================
-    // CALCULAR PRECIO
+    // PRECIO FINAL
     // =========================
 
     @Override
     public double calcularPrecioFinal() {
 
-        double precioFinal =
-                getPrecio();
+        if (temporada.equalsIgnoreCase("ALTA")) {
 
-        switch (temporada) {
-
-            // =====================
-            // TEMPORADA ALTA
-            // =====================
-
-            case "ALTA" ->
-
-                precioFinal *= 1.20;
-
-            // =====================
-            // TEMPORADA BAJA
-            // =====================
-
-            case "BAJA" ->
-
-                precioFinal *= 0.70;
+            return getPrecio() * 1.30;
         }
 
-        return precioFinal;
+        if (temporada.equalsIgnoreCase("BAJA")) {
+
+            return getPrecio() * 0.80;
+        }
+
+        return getPrecio();
     }
 }

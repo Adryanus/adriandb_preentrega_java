@@ -26,10 +26,6 @@ public class ArticuloElectronico
                 garantiaMeses;
     }
 
-    // =========================
-    // GETTERS Y SETTERS
-    // =========================
-
     public int getGarantiaMeses() {
 
         return garantiaMeses;
@@ -44,49 +40,40 @@ public class ArticuloElectronico
     }
 
     // =========================
-    // MOSTRAR DETALLE
+    // DETALLE
     // =========================
 
     @Override
-    public void mostrarDetalle() {
+    public String obtenerDetalle() {
 
-        System.out.println(
-                "🔌 Garantia: " +
-                garantiaMeses +
-                " meses"
-        );
-
-        System.out.println(
-                "💲 Precio final: $" +
-                calcularPrecioFinal()
-        );
+        return
+                "🔌 Garantia: "
+                + garantiaMeses
+                + " meses";
     }
 
     // =========================
-    // CALCULAR PRECIO
+    // PRECIO FINAL
     // =========================
 
     @Override
     public double calcularPrecioFinal() {
 
-        double precioFinal =
-                getPrecio();
+        if (garantiaMeses == 6) {
 
-        switch (garantiaMeses) {
-
-            case 6 ->
-
-                precioFinal *= 1.05;
-
-            case 12 ->
-
-                precioFinal *= 1.10;
-
-            case 36 ->
-
-                precioFinal *= 1.25;
+            return getPrecio() * 1.05;
         }
 
-        return precioFinal;
+        if (garantiaMeses == 12) {
+
+            return getPrecio() * 1.10;
+        }
+
+        if (garantiaMeses == 36) {
+
+            return getPrecio() * 1.25;
+        }
+
+        return getPrecio();
     }
 }

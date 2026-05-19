@@ -26,10 +26,6 @@ public class ArticuloComestible
                 vencimiento;
     }
 
-    // =========================
-    // GETTERS Y SETTERS
-    // =========================
-
     public String getVencimiento() {
 
         return vencimiento;
@@ -44,60 +40,39 @@ public class ArticuloComestible
     }
 
     // =========================
-    // MOSTRAR DETALLE
+    // DETALLE
     // =========================
 
     @Override
-    public void mostrarDetalle() {
+    public String obtenerDetalle() {
 
-        System.out.println(
-                "🍎 Vence: " +
-                vencimiento
-        );
-
-        System.out.println(
-                "💲 Precio final: $" +
-                calcularPrecioFinal()
-        );
+        return
+                "🍎 Vence: "
+                + vencimiento;
     }
 
     // =========================
-    // CALCULAR PRECIO
+    // PRECIO FINAL
     // =========================
 
     @Override
     public double calcularPrecioFinal() {
 
-        double precioFinal =
-                getPrecio();
+        if (vencimiento.equalsIgnoreCase("6M")) {
 
-        switch (vencimiento) {
-
-            // =====================
-            // 6 meses
-            // =====================
-
-            case "6M" ->
-
-                precioFinal *= 1.00;
-
-            // =====================
-            // 1 mes
-            // =====================
-
-            case "1M" ->
-
-                precioFinal *= 0.80;
-
-            // =====================
-            // 7 dias
-            // =====================
-
-            case "7D" ->
-
-                precioFinal *= 0.50;
+            return getPrecio();
         }
 
-        return precioFinal;
+        if (vencimiento.equalsIgnoreCase("1M")) {
+
+            return getPrecio() * 0.85;
+        }
+
+        if (vencimiento.equalsIgnoreCase("7D")) {
+
+            return getPrecio() * 0.60;
+        }
+
+        return getPrecio();
     }
 }

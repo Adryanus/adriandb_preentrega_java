@@ -26,14 +26,14 @@ com\inventory\model\articulo\ArticuloComestible.java ^
 com\inventory\model\articulo\ArticuloRopa.java ^
 com\inventory\service\CategoriaService.java ^
 com\inventory\service\ArticuloService.java ^
+com\inventory\controller\CategoriaController.java ^
 com\inventory\controller\ArticuloController.java ^
 com\inventory\InventoryApp.java
 
-
-if %errorlevel% neq 0 (
+IF ERRORLEVEL 1 (
 
     echo.
-    echo ❌ Error de compilacion
+    echo ❌ ERROR DE COMPILACION
 
     pause
 
@@ -41,6 +41,6 @@ if %errorlevel% neq 0 (
 )
 
 echo.
-echo ✅ Compilacion exitosa
-echo.
+echo ✅ COMPILACION EXITOSA
+
 

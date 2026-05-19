@@ -620,7 +620,7 @@ public class ArticuloController {
 
                 truncar(
                         a.getCategoria()
-                         .getNombre(),
+                                .getNombre(),
                         12
                 ),
 
