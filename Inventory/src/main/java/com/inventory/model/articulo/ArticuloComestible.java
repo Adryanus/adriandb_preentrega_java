@@ -5,35 +5,99 @@ public class ArticuloComestible
 
     private String vencimiento;
 
-    public ArticuloComestible(int id,
+    public ArticuloComestible(
+            int id,
             String codigo,
             String descripcion,
             double precio,
             Categoria categoria,
-            String vencimiento) {
+            String vencimiento
+    ) {
 
-        super(id,
+        super(
+                id,
                 codigo,
                 descripcion,
                 precio,
-                categoria);
+                categoria
+        );
 
-        this.vencimiento = vencimiento;
+        this.vencimiento =
+                vencimiento;
     }
 
+    // =========================
+    // GETTERS Y SETTERS
+    // =========================
+
     public String getVencimiento() {
+
         return vencimiento;
     }
 
-    public void setVencimiento(String vencimiento) {
-        this.vencimiento = vencimiento;
+    public void setVencimiento(
+            String vencimiento
+    ) {
+
+        this.vencimiento =
+                vencimiento;
     }
+
+    // =========================
+    // MOSTRAR DETALLE
+    // =========================
 
     @Override
     public void mostrarDetalle() {
 
         System.out.println(
                 "🍎 Vence: " +
-                        vencimiento);
+                vencimiento
+        );
+
+        System.out.println(
+                "💲 Precio final: $" +
+                calcularPrecioFinal()
+        );
+    }
+
+    // =========================
+    // CALCULAR PRECIO
+    // =========================
+
+    @Override
+    public double calcularPrecioFinal() {
+
+        double precioFinal =
+                getPrecio();
+
+        switch (vencimiento) {
+
+            // =====================
+            // 6 meses
+            // =====================
+
+            case "6M" ->
+
+                precioFinal *= 1.00;
+
+            // =====================
+            // 1 mes
+            // =====================
+
+            case "1M" ->
+
+                precioFinal *= 0.80;
+
+            // =====================
+            // 7 dias
+            // =====================
+
+            case "7D" ->
+
+                precioFinal *= 0.50;
+        }
+
+        return precioFinal;
     }
 }

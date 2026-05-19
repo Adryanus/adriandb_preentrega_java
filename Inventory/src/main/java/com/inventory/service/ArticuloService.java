@@ -10,22 +10,38 @@ public class ArticuloService {
     private List<Articulo> articulos =
             new ArrayList<>();
 
-    public void agregar(Articulo articulo) {
+    // =========================
+    // AGREGAR
+    // =========================
+
+    public void agregar(
+            Articulo articulo
+    ) {
 
         articulos.add(articulo);
     }
+
+    // =========================
+    // LISTAR
+    // =========================
 
     public List<Articulo> listar() {
 
         return articulos;
     }
 
-    public Articulo buscarPorCodigo(String codigo) {
+    // =========================
+    // BUSCAR
+    // =========================
+
+    public Articulo buscarPorCodigo(
+            String codigo
+    ) {
 
         for (Articulo a : articulos) {
 
             if (a.getCodigo()
-                 .equalsIgnoreCase(codigo)) {
+                    .equalsIgnoreCase(codigo)) {
 
                 return a;
             }
@@ -34,9 +50,16 @@ public class ArticuloService {
         return null;
     }
 
-    public boolean eliminar(String codigo) {
+    // =========================
+    // ELIMINAR
+    // =========================
 
-        Articulo a = buscarPorCodigo(codigo);
+    public boolean eliminar(
+            String codigo
+    ) {
+
+        Articulo a =
+                buscarPorCodigo(codigo);
 
         if (a != null) {
 

@@ -17,6 +17,7 @@ echo ============================
 
 javac ^
 com\inventory\interfaces\Mostrable.java ^
+com\inventory\interfaces\Calculable.java ^
 com\inventory\model\Producto.java ^
 com\inventory\model\articulo\Categoria.java ^
 com\inventory\model\articulo\Articulo.java ^
@@ -27,6 +28,7 @@ com\inventory\service\CategoriaService.java ^
 com\inventory\service\ArticuloService.java ^
 com\inventory\controller\ArticuloController.java ^
 com\inventory\InventoryApp.java
+
 
 if %errorlevel% neq 0 (
 

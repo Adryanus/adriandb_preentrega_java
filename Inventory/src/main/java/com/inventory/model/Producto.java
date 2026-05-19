@@ -11,9 +11,9 @@ public class Producto {
     protected double precio;
 
     public Producto(int id,
-            String codigo,
-            String descripcion,
-            double precio) {
+                     String codigo,
+                     String descripcion,
+                     double precio) {
 
         this.id = id;
         this.codigo = codigo;
