@@ -2,12 +2,12 @@ package com.inventory.service;
 
 import java.util.List;
 
-import com.inventory.interfaces.CrudService;
+import com.inventory.interfaces.CrudOperations;
 import com.inventory.interfaces.Identificable;
 import com.inventory.repository.Repository;
 
 public class GenericService<T extends Identificable>
-        implements CrudService<T> {
+        implements CrudOperations<T> {
 
     protected Repository<T> repository;
 

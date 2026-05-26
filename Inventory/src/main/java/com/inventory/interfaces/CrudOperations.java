@@ -2,7 +2,7 @@ package com.inventory.interfaces;
 
 import java.util.List;
 
-public interface CrudService<T> {
+public interface CrudOperations<T> {
 
     // =========================
     // CREATE
