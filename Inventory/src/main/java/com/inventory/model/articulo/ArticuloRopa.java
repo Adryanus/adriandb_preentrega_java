@@ -1,12 +1,9 @@
 package com.inventory.model.articulo;
 
-public class ArticuloRopa
-        extends Articulo {
+public class ArticuloRopa extends Articulo {
 
     private String talle;
-
     private String color;
-
     private String temporada;
 
     public ArticuloRopa(
@@ -29,48 +26,32 @@ public class ArticuloRopa
         );
 
         this.talle = talle;
-
         this.color = color;
-
-        this.temporada =
-                temporada;
+        this.temporada = temporada;
     }
 
     public String getTalle() {
-
         return talle;
     }
 
-    public void setTalle(
-            String talle
-    ) {
-
+    public void setTalle(String talle) {
         this.talle = talle;
     }
 
     public String getColor() {
-
         return color;
     }
 
-    public void setColor(
-            String color
-    ) {
-
+    public void setColor(String color) {
         this.color = color;
     }
 
     public String getTemporada() {
-
         return temporada;
     }
 
-    public void setTemporada(
-            String temporada
-    ) {
-
-        this.temporada =
-                temporada;
+    public void setTemporada(String temporada) {
+        this.temporada = temporada;
     }
 
     // =========================
@@ -80,8 +61,7 @@ public class ArticuloRopa
     @Override
     public String obtenerDetalle() {
 
-        return
-                "👕 Talle: "
+        return "👕 Talle: "
                 + talle
                 + " | Color: "
                 + color
@@ -96,16 +76,16 @@ public class ArticuloRopa
     @Override
     public double calcularPrecioFinal() {
 
-        if (temporada.equalsIgnoreCase("ALTA")) {
+        switch (temporada.toUpperCase()) {
 
-            return getPrecio() * 1.30;
+            case "ALTA":
+                return getPrecio() * 1.30;
+
+            case "BAJA":
+                return getPrecio() * 0.80;
+
+            default:
+                return getPrecio();
         }
-
-        if (temporada.equalsIgnoreCase("BAJA")) {
-
-            return getPrecio() * 0.80;
-        }
-
-        return getPrecio();
     }
 }

@@ -1,6 +1,8 @@
 package com.inventory.model;
 
-public class Producto {
+import com.inventory.interfaces.Identificable;
+
+public class Producto implements Identificable {
 
     protected int id;
 
@@ -10,10 +12,12 @@ public class Producto {
 
     protected double precio;
 
-    public Producto(int id,
-                     String codigo,
-                     String descripcion,
-                     double precio) {
+    public Producto(
+            int id,
+            String codigo,
+            String descripcion,
+            double precio
+    ) {
 
         this.id = id;
         this.codigo = codigo;
@@ -21,9 +25,18 @@ public class Producto {
         this.precio = precio;
     }
 
+    // =========================
+    // ID
+    // =========================
+
+    @Override
     public int getId() {
         return id;
     }
+
+    // =========================
+    // CODIGO
+    // =========================
 
     public String getCodigo() {
         return codigo;
@@ -33,6 +46,10 @@ public class Producto {
         this.codigo = codigo;
     }
 
+    // =========================
+    // DESCRIPCION
+    // =========================
+
     public String getDescripcion() {
         return descripcion;
     }
@@ -40,6 +57,10 @@ public class Producto {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
+    // =========================
+    // PRECIO
+    // =========================
 
     public double getPrecio() {
         return precio;

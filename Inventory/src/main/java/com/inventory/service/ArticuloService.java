@@ -1,74 +1,35 @@
 package com.inventory.service;
 
-import com.inventory.model.articulo.Articulo;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArticuloService {
+import com.inventory.model.articulo.Articulo;
+import com.inventory.model.articulo.Categoria;
 
-    private List<Articulo> articulos =
-            new ArrayList<>();
+public class ArticuloService
+        extends GenericService<Articulo> {
 
     // =========================
-    // AGREGAR
+    // BUSCAR POR CATEGORIA
     // =========================
 
-    public void agregar(
-            Articulo articulo
+    public List<Articulo> buscarPorCategoria(
+            Categoria categoria
     ) {
 
-        articulos.add(articulo);
-    }
+        List<Articulo> resultado =
+                new ArrayList<>();
 
-    // =========================
-    // LISTAR
-    // =========================
+        for (Articulo articulo : listar()) {
 
-    public List<Articulo> listar() {
+            if (articulo.getCategoria()
+                    .equals(categoria)) {
 
-        return articulos;
-    }
-
-    // =========================
-    // BUSCAR
-    // =========================
-
-    public Articulo buscarPorCodigo(
-            String codigo
-    ) {
-
-        for (Articulo a : articulos) {
-
-            if (a.getCodigo()
-                    .equalsIgnoreCase(codigo)) {
-
-                return a;
+                resultado.add(articulo);
             }
         }
 
-        return null;
-    }
-
-    // =========================
-    // ELIMINAR
-    // =========================
-
-    public boolean eliminar(
-            String codigo
-    ) {
-
-        Articulo a =
-                buscarPorCodigo(codigo);
-
-        if (a != null) {
-
-            articulos.remove(a);
-
-            return true;
-        }
-
-        return false;
+        return resultado;
     }
 
     // =========================
@@ -76,16 +37,14 @@ public class ArticuloService {
     // =========================
 
     public boolean existeCategoriaEnUso(
-            String codigoCategoria
+            int idCategoria
     ) {
 
-        for (Articulo a : articulos) {
+        for (Articulo articulo : listar()) {
 
-            if (a.getCategoria()
-                    .getCodigo()
-                    .equalsIgnoreCase(
-                            codigoCategoria
-                    )) {
+            if (articulo
+                    .getCategoria()
+                    .getId() == idCategoria) {
 
                 return true;
             }

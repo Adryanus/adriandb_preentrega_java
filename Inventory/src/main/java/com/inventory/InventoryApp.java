@@ -1,11 +1,11 @@
 package com.inventory;
 
-import com.inventory.controller.ArticuloController;
+import com.inventory.controller.MainController;
 
 public class InventoryApp {
 
     public static void main(String[] args) {
 
-        new ArticuloController().iniciar();
+        new MainController().iniciar();
     }
 }

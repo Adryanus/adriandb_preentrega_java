@@ -1,7 +1,6 @@
 package com.inventory.model.articulo;
 
-public class ArticuloComestible
-        extends Articulo {
+public class ArticuloComestible extends Articulo {
 
     private String vencimiento;
 
@@ -22,21 +21,15 @@ public class ArticuloComestible
                 categoria
         );
 
-        this.vencimiento =
-                vencimiento;
+        this.vencimiento = vencimiento;
     }
 
     public String getVencimiento() {
-
         return vencimiento;
     }
 
-    public void setVencimiento(
-            String vencimiento
-    ) {
-
-        this.vencimiento =
-                vencimiento;
+    public void setVencimiento(String vencimiento) {
+        this.vencimiento = vencimiento;
     }
 
     // =========================
@@ -46,9 +39,7 @@ public class ArticuloComestible
     @Override
     public String obtenerDetalle() {
 
-        return
-                "🍎 Vence: "
-                + vencimiento;
+        return "🍎 Vence: " + vencimiento;
     }
 
     // =========================
@@ -58,21 +49,18 @@ public class ArticuloComestible
     @Override
     public double calcularPrecioFinal() {
 
-        if (vencimiento.equalsIgnoreCase("6M")) {
+        switch (vencimiento.toUpperCase()) {
 
-            return getPrecio();
+            case "1M":
+                return getPrecio() * 0.85;
+
+            case "7D":
+                return getPrecio() * 0.60;
+
+            case "6M":
+            default:
+                return getPrecio();
         }
-
-        if (vencimiento.equalsIgnoreCase("1M")) {
-
-            return getPrecio() * 0.85;
-        }
-
-        if (vencimiento.equalsIgnoreCase("7D")) {
-
-            return getPrecio() * 0.60;
-        }
-
-        return getPrecio();
     }
 }
+

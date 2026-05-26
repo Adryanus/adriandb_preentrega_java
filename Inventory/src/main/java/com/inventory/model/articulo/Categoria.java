@@ -1,72 +1,43 @@
 package com.inventory.model.articulo;
 
-public class Categoria {
+import com.inventory.interfaces.Identificable;
 
-    // =========================
-    // ATRIBUTOS
-    // =========================
+public class Categoria implements Identificable {
 
     private int id;
-
-    private String codigo;
 
     private String nombre;
 
     private String descripcion;
 
-    // =========================
-    // CONSTRUCTOR
-    // =========================
-
     public Categoria(
             int id,
-            String codigo,
             String nombre,
             String descripcion
     ) {
 
         this.id = id;
-
-        this.codigo = codigo;
-
         this.nombre = nombre;
-
         this.descripcion = descripcion;
     }
 
     // =========================
-    // GETTERS
+    // ID
     // =========================
 
+    @Override
     public int getId() {
 
         return id;
     }
 
-    public String getCodigo() {
-
-        return codigo;
-    }
+    // =========================
+    // NOMBRE
+    // =========================
 
     public String getNombre() {
 
         return nombre;
-    }
-
-    public String getDescripcion() {
-
-        return descripcion;
-    }
-
-    // =========================
-    // SETTERS
-    // =========================
-
-    public void setCodigo(
-            String codigo
-    ) {
-
-        this.codigo = codigo;
     }
 
     public void setNombre(
@@ -76,10 +47,29 @@ public class Categoria {
         this.nombre = nombre;
     }
 
+    // =========================
+    // DESCRIPCION
+    // =========================
+
+    public String getDescripcion() {
+
+        return descripcion;
+    }
+
     public void setDescripcion(
             String descripcion
     ) {
 
         this.descripcion = descripcion;
+    }
+
+    // =========================
+    // TOSTRING
+    // =========================
+
+    @Override
+    public String toString() {
+
+        return nombre;
     }
 }

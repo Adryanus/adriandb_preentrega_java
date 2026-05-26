@@ -1,7 +1,6 @@
 package com.inventory.model.articulo;
 
-public class ArticuloElectronico
-        extends Articulo {
+public class ArticuloElectronico extends Articulo {
 
     private int garantiaMeses;
 
@@ -22,21 +21,15 @@ public class ArticuloElectronico
                 categoria
         );
 
-        this.garantiaMeses =
-                garantiaMeses;
+        this.garantiaMeses = garantiaMeses;
     }
 
     public int getGarantiaMeses() {
-
         return garantiaMeses;
     }
 
-    public void setGarantiaMeses(
-            int garantiaMeses
-    ) {
-
-        this.garantiaMeses =
-                garantiaMeses;
+    public void setGarantiaMeses(int garantiaMeses) {
+        this.garantiaMeses = garantiaMeses;
     }
 
     // =========================
@@ -46,8 +39,7 @@ public class ArticuloElectronico
     @Override
     public String obtenerDetalle() {
 
-        return
-                "🔌 Garantia: "
+        return "🔌 Garantía: "
                 + garantiaMeses
                 + " meses";
     }
@@ -59,21 +51,19 @@ public class ArticuloElectronico
     @Override
     public double calcularPrecioFinal() {
 
-        if (garantiaMeses == 6) {
+        switch (garantiaMeses) {
 
-            return getPrecio() * 1.05;
+            case 6:
+                return getPrecio() * 1.05;
+
+            case 12:
+                return getPrecio() * 1.10;
+
+            case 36:
+                return getPrecio() * 1.25;
+
+            default:
+                return getPrecio();
         }
-
-        if (garantiaMeses == 12) {
-
-            return getPrecio() * 1.10;
-        }
-
-        if (garantiaMeses == 36) {
-
-            return getPrecio() * 1.25;
-        }
-
-        return getPrecio();
     }
 }

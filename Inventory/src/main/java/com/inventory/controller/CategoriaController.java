@@ -5,6 +5,7 @@ import com.inventory.model.articulo.Categoria;
 import com.inventory.service.CategoriaService;
 import com.inventory.service.ArticuloService;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class CategoriaController {
@@ -114,11 +115,11 @@ public class CategoriaController {
     private void agregar() {
 
         System.out.print(
-                "Codigo: "
+                "ID: "
         );
 
-        String codigo =
-                sc.nextLine();
+        int id =
+                leerEntero();
 
         System.out.print(
                 "Nombre: "
@@ -134,10 +135,15 @@ public class CategoriaController {
         String descripcion =
                 sc.nextLine();
 
+        Categoria categoria =
+                new Categoria(
+                        id,
+                        nombre,
+                        descripcion
+                );
+
         service.agregar(
-                codigo,
-                nombre,
-                descripcion
+                categoria
         );
 
         System.out.println(
@@ -153,24 +159,45 @@ public class CategoriaController {
 
     private void listar() {
 
+    System.out.println(
+            "\n📋 LISTA DE CATEGORIAS"
+    );
+
+    List<Categoria> categorias =
+            service.listar();
+
+    // =====================
+    // LISTA VACIA
+    // =====================
+
+    if (categorias.isEmpty()) {
+
         System.out.println(
-                "\n📋 LISTA DE CATEGORIAS"
+                "❌ No hay categorias cargadas"
         );
 
-        for (Categoria c :
-                service.listar()) {
-
-            System.out.println(
-                    c.getCodigo()
-                    + " | "
-                    + c.getNombre()
-                    + " | "
-                    + c.getDescripcion()
-            );
-        }
-
         pausa();
+
+        return;
     }
+
+    // =====================
+    // MOSTRAR LISTA
+    // =====================
+
+    for (Categoria c : categorias) {
+
+        System.out.println(
+                c.getId()
+                + " | "
+                + c.getNombre()
+                + " | "
+                + c.getDescripcion()
+        );
+    }
+
+    pausa();
+}
 
     // =========================
     // BUSCAR
@@ -179,15 +206,15 @@ public class CategoriaController {
     private void buscar() {
 
         System.out.print(
-                "Codigo: "
+                "ID: "
         );
 
-        String codigo =
-                sc.nextLine();
+        int id =
+                leerEntero();
 
         Categoria c =
-                service.buscarPorCodigo(
-                        codigo
+                service.buscarPorId(
+                        id
                 );
 
         if (c != null) {
@@ -197,7 +224,7 @@ public class CategoriaController {
             );
 
             System.out.println(
-                    c.getCodigo()
+                    c.getId()
                     + " | "
                     + c.getNombre()
                     + " | "
@@ -207,7 +234,7 @@ public class CategoriaController {
         } else {
 
             System.out.println(
-                    "❌ No encontrada"
+                    "❌ Categoria inexistente"
             );
         }
 
@@ -221,21 +248,21 @@ public class CategoriaController {
     private void modificar() {
 
         System.out.print(
-                "Codigo: "
+                "ID: "
         );
 
-        String codigo =
-                sc.nextLine();
+        int id =
+                leerEntero();
 
         Categoria c =
-                service.buscarPorCodigo(
-                        codigo
+                service.buscarPorId(
+                        id
                 );
 
         if (c == null) {
 
             System.out.println(
-                    "❌ No encontrada"
+                    "❌ Categoria inexistente"
             );
 
             pausa();
@@ -257,9 +284,13 @@ public class CategoriaController {
         String descripcion =
                 sc.nextLine();
 
-        service.modificar(
-                codigo,
-                nombre,
+        // =====================
+        // MODIFICACION DIRECTA
+        // =====================
+
+        c.setNombre(nombre);
+
+        c.setDescripcion(
                 descripcion
         );
 
@@ -277,11 +308,11 @@ public class CategoriaController {
     private void eliminar() {
 
         System.out.print(
-                "Codigo: "
+                "ID: "
         );
 
-        String codigo =
-                sc.nextLine();
+        int id =
+                leerEntero();
 
         // =====================
         // VALIDAR USO
@@ -289,7 +320,7 @@ public class CategoriaController {
 
         if (articuloService
                 .existeCategoriaEnUso(
-                        codigo
+                        id
                 )) {
 
             System.out.println(
@@ -305,7 +336,7 @@ public class CategoriaController {
             return;
         }
 
-        if (service.eliminar(codigo)) {
+        if (service.eliminar(id)) {
 
             System.out.println(
                     "\n🗑️ Categoria eliminada"
