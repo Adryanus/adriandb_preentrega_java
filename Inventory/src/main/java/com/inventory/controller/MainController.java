@@ -58,7 +58,7 @@ public class MainController {
         do {
 
             System.out.println(
-                    "\n📦 INVENTORY"
+                    "\n📦 INVENTARIO"
             );
 
             System.out.println(
